@@ -53,6 +53,33 @@ export type TranslationKey =
   | "picked_up"
   | "processed"
   | "error_fetching_data"
+  | "send_shipment"
+  | "send_shipment_description"
+  | "sender_details"
+  | "recipient_details"
+  | "next"
+  | "previous"
+  | "submit_shipment"
+  | "submitting"
+  | "success"
+  | "error"
+  | "please_fill_required_fields"
+  | "shipment_added_success"
+  | "failed_to_add_shipment"
+  | "city"
+  | "state_province"
+  | "postal_code"
+  | "country_code"
+  | "select_country"
+  | "select_pack_type"
+  | "carton"
+  | "pallet"
+  | "box"
+  | "envelope"
+  | "other"
+  | "select_currency"
+  | "shipment_info_received"
+  | "demo_tracking_number"
 
 export const translations = {
   en: {
@@ -111,6 +138,33 @@ export const translations = {
     picked_up: "Picked Up",
     processed: "Processed",
     error_fetching_data: "Error fetching shipment data. Please try again later.",
+    send_shipment: "Send Shipment",
+    send_shipment_description: "Fill in the form to send your package",
+    sender_details: "Sender Details",
+    recipient_details: "Recipient Details",
+    next: "Next",
+    previous: "Previous",
+    submit_shipment: "Submit Shipment",
+    submitting: "Submitting...",
+    success: "Success",
+    error: "Error",
+    please_fill_required_fields: "Please fill all required fields",
+    shipment_added_success: "Shipment added successfully",
+    failed_to_add_shipment: "Failed to add shipment",
+    city: "City",
+    state_province: "State/Province",
+    postal_code: "Postal Code",
+    country_code: "Country",
+    select_country: "Select country",
+    select_pack_type: "Select package type",
+    carton: "Carton",
+    pallet: "Pallet",
+    box: "Box",
+    envelope: "Envelope",
+    other: "Other",
+    select_currency: "Select currency",
+    shipment_info_received: "Shipment information received",
+    demo_tracking_number: "Demo tracking number",
   },
   zh: {
     home: "首页",
@@ -167,6 +221,33 @@ export const translations = {
     picked_up: "已取件",
     processed: "已处理",
     error_fetching_data: "获取物流数据时出错。请稍后再试。",
+    send_shipment: "寄件",
+    send_shipment_description: "填写表格寄送您的包裹",
+    sender_details: "发件人详情",
+    recipient_details: "收件人详情",
+    next: "下一步",
+    previous: "上一步",
+    submit_shipment: "提交寄件",
+    submitting: "提交中...",
+    success: "成功",
+    error: "错误",
+    please_fill_required_fields: "请填写所有必填字段",
+    shipment_added_success: "寄件信息添加成功",
+    failed_to_add_shipment: "添加寄件信息失败",
+    city: "城市",
+    state_province: "省/州",
+    postal_code: "邮编",
+    country_code: "国家",
+    select_country: "选择国家",
+    select_pack_type: "选择包装类型",
+    carton: "纸箱",
+    pallet: "托盘",
+    box: "盒子",
+    envelope: "信封",
+    other: "其他",
+    select_currency: "选择货币",
+    shipment_info_received: "已收到寄件信息",
+    demo_tracking_number: "演示物流单号",
   },
 }
 

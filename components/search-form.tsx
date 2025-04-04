@@ -1,12 +1,12 @@
 "use client"
 
-import type React from "react"
-
+import type React from 'react';
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useLanguage } from "@/components/language-provider"
+import { Search } from 'lucide-react';
 
 export function SearchForm() {
   const { t } = useLanguage()
@@ -32,23 +32,28 @@ export function SearchForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="tracking-number" className="block text-sm font-medium text-gray-700 mb-1">
-          {t("tracking_number")}
-        </label>
-        <Input
-          id="tracking-number"
-          type="text"
-          placeholder={t("enter_tracking_number")}
-          value={trackingNumber}
-          onChange={(e) => setTrackingNumber(e.target.value)}
-          className="w-full"
-        />
+        <div className="relative">
+          <Input
+            id="tracking-number"
+            type="text"
+            placeholder={t('enter_tracking_number')}
+            value={trackingNumber}
+            onChange={(e) => setTrackingNumber(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 rounded-lg"
+          />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-gray-400" />
+          </div>
+        </div>
         {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+        <p className="mt-1 text-xs text-gray-500">
+          {t('demo_tracking_number')}: TSH2025274
+        </p>
       </div>
-      <Button type="submit" className="w-full md:w-auto">
-        {t("track_shipment")}
+      <Button type="submit" className="w-full">
+        {t('track_shipment')}
       </Button>
     </form>
-  )
+  );
 }
 

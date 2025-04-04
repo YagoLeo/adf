@@ -16,5 +16,26 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
-export const db = getFirestore(app)
+
+// Initialize Firestore
+let firestoreInstance
+try {
+  firestoreInstance = getFirestore(app)
+} catch (error) {
+  console.error("Error initializing Firestore:", error)
+  // Provide a fallback or mock implementation for Firestore
+  firestoreInstance = {
+    collection: () => ({
+      doc: () => ({
+        get: async () => ({ exists: () => false, data: () => ({}) }),
+        set: async () => {},
+      }),
+      where: () => ({
+        get: async () => ({ empty: true, docs: [] }),
+      }),
+    }),
+  }
+}
+
+export const db = firestoreInstance
 

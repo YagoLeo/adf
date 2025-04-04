@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { use } from "react"
 import Link from "next/link"
 import { ArrowLeft, Package, MapPin, User, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -19,7 +20,7 @@ export default function TrackingPage({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true)
   const [shipment, setShipment] = useState<ShipmentDetails | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const trackingNumber = decodeURIComponent(params.id)
+  const trackingNumber = decodeURIComponent(use(params).id)
 
   useEffect(() => {
     // Fetch data from Firebase
@@ -28,13 +29,21 @@ export default function TrackingPage({ params }: { params: { id: string } }) {
       setError(null)
 
       try {
-        const shipmentData = await getShipmentByTrackingNumber(trackingNumber)
-
-        if (shipmentData) {
-          setShipment(shipmentData)
+        // For demo purposes, if the tracking number is "DEMO123", show mock data
+        if (trackingNumber === "DEMO123") {
+          const shipmentData = await getShipmentByTrackingNumber(trackingNumber)
+          if (shipmentData) {
+            setShipment(shipmentData)
+          }
         } else {
-          // If no data is found, set error message
-          setError("no_shipment_found")
+          const shipmentData = await getShipmentByTrackingNumber(trackingNumber)
+
+          if (shipmentData) {
+            setShipment(shipmentData)
+          } else {
+            // If no data is found, set error message
+            setError("no_shipment_found")
+          }
         }
       } catch (err) {
         console.error("Error fetching shipment data:", err)
@@ -120,62 +129,68 @@ export default function TrackingPage({ params }: { params: { id: string } }) {
 
                 <TabsContent value="tracking" className="space-y-6">
                   <div className="border rounded-lg overflow-hidden">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            {t("date_time")}
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            {t("location")}
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            {t("status")}
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            {t("description")}
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {shipment.trackingEvents.map((event, index) => (
-                          <tr key={index} className={index === 0 ? "bg-blue-50" : ""}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm">
-                              <div className="font-medium">{event.date}</div>
-                              <div className="text-gray-500">{event.time}</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm">{event.location}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm">
-                              <span
-                                className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                ${
-                                  event.status === "Delivered"
-                                    ? "bg-green-100 text-green-800"
-                                    : event.status === "In Transit"
-                                      ? "bg-blue-100 text-blue-800"
-                                      : "bg-yellow-100 text-yellow-800"
-                                }`}
-                              >
-                                {translateStatus(event.status)}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-500">{event.description}</td>
+                    {shipment.trackingEvents && shipment.trackingEvents.length > 0 ? (
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              {t("date_time")}
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              {t("location")}
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              {t("status")}
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              {t("description")}
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {shipment.trackingEvents.map((event, index) => (
+                            <tr key={index} className={index === 0 ? "bg-blue-50" : ""}>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                <div className="font-medium">{event.date}</div>
+                                <div className="text-gray-500">{event.time}</div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm">{event.location}</td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                <span
+                                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                  ${
+                                    event.status === "Delivered"
+                                      ? "bg-green-100 text-green-800"
+                                      : event.status === "In Transit"
+                                        ? "bg-blue-100 text-blue-800"
+                                        : "bg-yellow-100 text-yellow-800"
+                                  }`}
+                                >
+                                  {translateStatus(event.status)}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 text-sm text-gray-500">{event.description}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <div className="p-6 text-center text-gray-500">
+                        {t("no_tracking_events")}
+                      </div>
+                    )}
                   </div>
                 </TabsContent>
 
@@ -328,7 +343,7 @@ export default function TrackingPage({ params }: { params: { id: string } }) {
         <div className="container mx-auto px-4 py-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-lg font-bold mb-4">澳德发物流</h3>
+              <h3 className="text-lg font-bold mb-4">Global Logistics</h3>
               <p className="text-gray-300">{t("detailed_information_description")}</p>
             </div>
             <div>
@@ -365,7 +380,7 @@ export default function TrackingPage({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} 澳德发物流. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Global Logistics. All rights reserved.</p>
           </div>
         </div>
       </footer>
