@@ -406,19 +406,18 @@ function QueryContent({ t }: { t: (key: string) => string }) {
     <div className="flex flex-col items-center justify-center h-full gap-8">
       {/* Banner */}
       <div className="relative w-full h-40 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
-        <div className="absolute inset-0 p-6 text-white flex flex-col justify-center">
-          <h2 className="text-2xl font-bold mb-2">
-            澳德发物流 - 您的澳洲专线物流专家
-          </h2>
-          <p className="text-sm">
+        <div className="absolute inset-0 p-6 text-white flex flex-col justify-center items-center text-center">
+          <h2 className="text-3xl font-bold mb-3 tracking-wide">澳德发物流</h2>
+          <h3 className="text-xl font-semibold mb-2">您的澳洲专线物流专家</h3>
+          <p className="text-sm max-w-2xl">
             专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。
             我们致力于为客户提供安全、高效、便捷的跨境物流解决方案。
           </p>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md overflow-hidden  w-full pb-8">
-        <div className="bg-blue-600 p-6 text-white">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full pb-8">
+        <div className="bg-blue-600 p-6 text-white text-center">
           <h2 className="text-2xl font-bold mb-2">
             {t('track_your_shipment')}
           </h2>
@@ -430,28 +429,20 @@ function QueryContent({ t }: { t: (key: string) => string }) {
           <SearchForm />
         </div>
         {/* QR Code Scanner Section */}
-        <div className="flex flex-col items-center">
-          <button
-            className="bg-green-600 text-white py-3 px-6 w-full rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition-colors"
-            style={{ height: '40px', width: '80vw' }}
-          >
-            <Search className="w-3 h-3" />
+        <div className="flex flex-col items-center px-6">
+          <button className="bg-green-600 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition-colors w-full max-w-md">
+            <Search className="w-4 h-4" />
             {t('scan_qr_code')}
           </button>
         </div>
       </div>
 
       {/* Banner */}
-      <div className="relative h-24 bg-blue-600 rounded-lg overflow-hidden shadow-sm md:shadow-md w-full">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 flex items-center p-6">
-          <div className="text-white">
-            <h2 className="text-2xl font-bold">
-              {t('shipping_account_booking')}
-            </h2>
-            <p className="text-sm text-blue-100 mt-1">
-              {t('click_to_schedule')}
-            </p>
-          </div>
+      <div className="relative w-full h-20 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
+        <div className="absolute inset-0 p-6 text-white flex flex-col justify-center items-center text-center">
+          <p className="text-xl font-bold mb-3 tracking-wide">
+            寄件｜查询｜预约
+          </p>
         </div>
       </div>
 
@@ -471,6 +462,41 @@ function QueryContent({ t }: { t: (key: string) => string }) {
 }
 
 function ProfileContent({ t }: { t: (key: string) => string }) {
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: '如何追踪我的包裹？',
+      answer:
+        "您可以通过以下方式追踪包裹：1. 在首页输入运单号 2. 扫描包裹上的二维码 3. 在APP中查看'我的订单'",
+    },
+    {
+      question: '从中国发货到澳洲需要多久？',
+      answer:
+        '一般空运7-10个工作日，海运20-30个工作日。具体时间可能因目的地、货物类型和清关时间而有所不同。',
+    },
+    {
+      question: '你们可以寄送哪些物品？',
+      answer:
+        '我们可以运送大多数日常物品，包括服装、电子产品、食品等。但不能托运违禁品，如易燃物、管制刀具等。详细清单请查看违禁品列表。',
+    },
+    {
+      question: '如何计算运费？',
+      answer:
+        '运费根据重量或体积（取较大值）计算，另外还要考虑目的地。您可以使用我们的运费计算器获取准确报价。',
+    },
+    {
+      question: '包裹丢失或损坏怎么办？',
+      answer:
+        '我们为所有包裹提供基本保险。如发生丢失或损坏，请立即联系客服，提供运单号和相关证据，我们会按照保险条款进行赔付。',
+    },
+    {
+      question: '你们的取件时间是怎样的？',
+      answer:
+        '我们的取件时间为周一至周六 9:00-18:00。您可以在下单时选择希望的取件时间段。',
+    },
+  ];
+
   return (
     <div className="flex flex-col gap-4">
       {/* User Profile */}
@@ -514,6 +540,33 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
             </div>
             <span className="text-xs">{t('contact_us')}</span>
           </div>
+        </div>
+      </div>
+
+      {/* Customer Service FAQ */}
+      <div className="bg-white rounded-lg p-4 shadow-sm md:shadow-md">
+        <h3 className="text-lg font-medium mb-4">客服常见问题</h3>
+        <div className="space-y-2">
+          {faqs.map((faq, index) => (
+            <div key={index} className="border rounded-lg overflow-hidden">
+              <button
+                className="w-full px-4 py-3 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+                onClick={() =>
+                  setExpandedFaq(expandedFaq === index ? null : index)
+                }
+              >
+                <span className="font-medium">{faq.question}</span>
+                <span className="transform transition-transform duration-200">
+                  {expandedFaq === index ? '−' : '+'}
+                </span>
+              </button>
+              {expandedFaq === index && (
+                <div className="px-4 py-3 bg-white text-gray-600">
+                  {faq.answer}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
