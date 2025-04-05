@@ -8,10 +8,10 @@ import { LanguageProvider } from "@/components/language-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Global Logistics - Track Your Shipment",
-  description: "Track your shipments and view detailed logistics information",
-    generator: 'v0.dev'
-}
+  title: '澳德发物流',
+  description: 'Track your shipments and view detailed logistics information',
+  generator: 'v0.dev',
+};
 
 export default function RootLayout({
   children,
