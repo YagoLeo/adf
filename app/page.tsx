@@ -102,6 +102,54 @@ export default function HomePage() {
         {activeTab === 'send' && <SendContent t={t} />}
         {activeTab === 'query' && <QueryContent t={t} />}
         {activeTab === 'profile' && <ProfileContent t={t} />}
+        {activeTab === 'home' && (
+          <div className="mt-4">
+            <div className="relative w-full h-24 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
+              <div className="absolute inset-0 grid grid-cols-3 gap-1">
+                <button
+                  onClick={() => setActiveTab('send')}
+                  className="flex items-center justify-center hover:bg-black/10 transition-colors"
+                >
+                  <div className="text-white text-center">
+                    <Package className="w-6 h-6 mx-auto mb-1" />
+                    <span className="text-lg font-medium">寄件</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setActiveTab('query')}
+                  className="flex items-center justify-center hover:bg-black/10 transition-colors"
+                >
+                  <div className="text-white text-center">
+                    <Search className="w-6 h-6 mx-auto mb-1" />
+                    <span className="text-lg font-medium">查询</span>
+                  </div>
+                </button>
+                <a
+                  href="https://adf.eagur.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center hover:bg-black/10 transition-colors"
+                >
+                  <div className="text-white text-center">
+                    <MapPin className="w-6 h-6 mx-auto mb-1" />
+                    <span className="text-lg font-medium">预约</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="w-full text-center p-4 bg-white rounded-lg shadow-sm">
+              <a
+                href="https://adf.eagur.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                访问我们的网站：https://adf.eagur.com
+              </a>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Bottom Navigation - Mobile Only */}
@@ -266,53 +314,6 @@ function HomeContent({ t }: { t: (key: string) => string }) {
             {t('scan_qr_code')}
           </button>
         </div>
-      </div>
-
-      {/* Banner */}
-      <div className="relative w-full h-24 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
-        <div className="absolute inset-0 grid grid-cols-3 gap-1">
-          <button
-            onClick={() => setActiveTab('send')}
-            className="flex items-center justify-center hover:bg-black/10 transition-colors"
-          >
-            <div className="text-white text-center">
-              <Package className="w-6 h-6 mx-auto mb-1" />
-              <span className="text-lg font-medium">寄件</span>
-            </div>
-          </button>
-          <button
-            onClick={() => setActiveTab('query')}
-            className="flex items-center justify-center hover:bg-black/10 transition-colors"
-          >
-            <div className="text-white text-center">
-              <Search className="w-6 h-6 mx-auto mb-1" />
-              <span className="text-lg font-medium">查询</span>
-            </div>
-          </button>
-          <a
-            href="https://adf.eagur.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center hover:bg-black/10 transition-colors"
-          >
-            <div className="text-white text-center">
-              <MapPin className="w-6 h-6 mx-auto mb-1" />
-              <span className="text-lg font-medium">预约</span>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      {/* Website URL */}
-      <div className="w-full text-center p-4 bg-white rounded-lg shadow-sm">
-        <a
-          href="https://adf.eagur.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 hover:text-blue-800 font-medium"
-        >
-          访问我们的网站：https://adf.eagur.com
-        </a>
       </div>
     </div>
   );
