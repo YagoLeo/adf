@@ -22,7 +22,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center">
             <Image
-              src="/placeholder.svg?height=40&width=40"
+              src="/icon.jpg?height=40&width=40"
               alt="Logistics Logo"
               width={40}
               height={40}
@@ -98,7 +98,30 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="flex-1 container mx-auto px-4 py-6 overflow-y-auto">
-        {activeTab === 'home' && <HomeContent t={t} />}
+        {activeTab === 'home' && (
+          <div className="flex flex-col items-center justify-center h-full gap-8">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden w-full pb-8">
+              <div className="bg-blue-600 p-6 text-white text-center">
+                <h2 className="text-2xl font-bold mb-2">
+                  {t('track_your_shipment')}
+                </h2>
+                <p className="text-blue-100">
+                  {t('enter_tracking_number_description')}
+                </p>
+              </div>
+              <div className="p-6">
+                <SearchForm />
+              </div>
+              {/* QR Code Scanner Section */}
+              <div className="flex flex-col items-center px-6">
+                <button className="bg-green-600 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition-colors w-full max-w-md">
+                  <Search className="w-4 h-4" />
+                  {t('scan_qr_code')}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {activeTab === 'send' && <SendContent t={t} />}
         {activeTab === 'query' && <QueryContent t={t} />}
         {activeTab === 'profile' && <ProfileContent t={t} />}
@@ -124,30 +147,51 @@ export default function HomePage() {
                     <span className="text-lg font-medium">查询</span>
                   </div>
                 </button>
-                <a
-                  href="https://adf.eagur.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setActiveTab('query')}
                   className="flex items-center justify-center hover:bg-black/10 transition-colors"
                 >
                   <div className="text-white text-center">
                     <MapPin className="w-6 h-6 mx-auto mb-1" />
                     <span className="text-lg font-medium">预约</span>
                   </div>
-                </a>
+                </button>
               </div>
             </div>
-
-            <div className="w-full text-center p-4 bg-white rounded-lg shadow-sm">
-              <a
-                href="https://adf.eagur.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 font-medium"
-              >
-                访问我们的网站：https://adf.eagur.com
-              </a>
+          </div>
+        )}
+        {activeTab === 'home' && (
+          <div className="relative w-full h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 rounded-xl overflow-hidden shadow-lg mt-8">
+            <div className="absolute inset-0 bg-pattern opacity-10"></div>
+            <div className="absolute inset-0 p-8 text-white">
+              <div className="h-full flex flex-col justify-center items-center text-center relative z-10">
+                <h3 className="text-xl font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+                  澳德发物流，您的澳洲专线物流专家
+                </h3>
+                <p className="text-base max-w-2xl leading-relaxed text-blue-50 font-medium">
+                  我们专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。
+                  <br />
+                  我们致力于为客户提供
+                  <span className="text-yellow-300">安全</span>、
+                  <span className="text-yellow-300">高效</span>、
+                  <span className="text-yellow-300">便捷</span>
+                  的跨境物流解决方案。
+                </p>
+              </div>
             </div>
+            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/10 to-transparent"></div>
+          </div>
+        )}
+        {activeTab === 'home' && (
+          <div className="w-full text-center p-4 bg-white rounded-lg shadow-sm mt-8">
+            <a
+              href="https://adf.eagur.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              访问我们的网站：https://adf.eagur.com
+            </a>
           </div>
         )}
       </main>
