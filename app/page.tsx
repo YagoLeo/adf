@@ -12,7 +12,7 @@ import '../styles/container.css';
 
 export default function HomePage() {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState('query');
+  const [activeTab, setActiveTab] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -106,7 +106,7 @@ export default function HomePage() {
 
       {/* Bottom Navigation - Mobile Only */}
       <nav className="md:hidden flex justify-around items-center py-3 bg-white border-t sticky bottom-0">
-        {/* <button
+        <button
           className={`flex flex-col items-center ${
             activeTab === 'home' ? 'text-blue-600' : 'text-gray-500'
           }`}
@@ -114,7 +114,7 @@ export default function HomePage() {
         >
           <Truck className="w-6 h-6" />
           <span className="text-xs mt-1">{t('home')}</span>
-        </button> */}
+        </button>
         <button
           className={`flex flex-col items-center ${
             activeTab === 'query' ? 'text-blue-600' : 'text-gray-500'
@@ -226,194 +226,25 @@ function SendContent({ t }: { t: (key: string) => string }) {
 
 function HomeContent({ t }: { t: (key: string) => string }) {
   return (
-    <div className="flex flex-col gap-4">
-      {/* Mobile Layout */}
-      <div className="md:hidden">
-        {/* Title */}
-        <h1 className="text-2xl font-bold text-center mb-4">澳德发物流</h1>
-
-        {/* Tracking Title */}
-        <h2 className="text-lg mb-3">{t('track_your_shipment')}</h2>
-
-        {/* Tracking Input */}
-        <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-          <input
-            type="text"
-            placeholder={t('enter_tracking_number')}
-            className="w-full p-3 border rounded-lg mb-3"
-          />
-          <button className="w-full bg-blue-600 text-white py-3 rounded-lg mb-3">
-            {t('scan_qr_code')}
-          </button>
-        </div>
-      </div>
-
-      {/* Desktop Layout */}
-      <div className="hidden md:block">
-        {/* Desktop Hero Section */}
-        <div className="hidden md:block bg-white rounded-lg shadow-md overflow-hidden mb-8">
-          <div className="bg-blue-600 p-6 text-white">
-            <h2 className="text-2xl font-bold mb-2">
-              {t('track_your_shipment')}
-            </h2>
-            <p className="text-blue-100">
-              {t('enter_tracking_number_description')}
-            </p>
-          </div>
-          <div className="p-6">
-            <SearchForm />
-          </div>
-        </div>
-
-        {/* Mobile Sections */}
-        <div className="md:hidden flex flex-col gap-4">
-          {/* User Profile Section */}
-          <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-              <User className="w-8 h-8 text-gray-500" />
-            </div>
-            <div className="text-lg font-medium">{t('account')}</div>
-          </div>
-
-          {/* Promotional Banner */}
-          <div className="relative h-32 bg-blue-600 rounded-lg overflow-hidden shadow-sm">
-            <div className="absolute inset-0 flex items-center p-4 text-white">
-              <div className="flex-1">
-                <div className="text-xl font-bold">
-                  {t('track_your_shipment')}
-                </div>
-                <div className="text-sm mt-1">
-                  {t('enter_tracking_number_description')}
-                </div>
-              </div>
-              <div className="w-1/3 h-full relative">
-                <div className="absolute bottom-0 right-0">
-                  <Image
-                    src="/placeholder.svg?height=100&width=100"
-                    alt="Delivery person"
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Search Form */}
-          <div className="bg-white rounded-lg p-4 shadow-sm">
-            <SearchForm />
-          </div>
-
-          {/* Quick Access */}
-          <div className="bg-white rounded-lg p-4 shadow-sm">
-            <h3 className="text-lg font-medium mb-4">{t('quick_links')}</h3>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
-                  <Package className="w-6 h-6 text-blue-500" />
-                </div>
-                <span className="text-sm">{t('track_shipment')}</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-2">
-                  <Truck className="w-6 h-6 text-orange-500" />
-                </div>
-                <span className="text-sm">{t('services')}</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-2">
-                  <MapPin className="w-6 h-6 text-green-500" />
-                </div>
-                <span className="text-sm">{t('contact')}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Desktop Features Grid */}
-        <div className="hidden md:grid md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="flex items-center mb-4">
-              <div className="bg-blue-100 p-3 rounded-full mr-4">
-                <Package className="h-6 w-6 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">{t('secure_tracking')}</h3>
-                <p className="text-gray-600">
-                  {t('secure_tracking_description')}
-                </p>
-              </div>
-            </div>
-            <p className="text-gray-600">{t('secure_tracking_description')}</p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="flex items-center mb-4">
-              <div className="bg-blue-100 p-3 rounded-full mr-4">
-                <Grid className="h-6 w-6 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">
-                  {t('detailed_information')}
-                </h3>
-                <p className="text-gray-600">
-                  {t('detailed_information_description')}
-                </p>
-              </div>
-            </div>
-            <p className="text-gray-600">
-              {t('detailed_information_description')}
-            </p>
-          </div>
-        </div>
-
-        {/* Service Options - Mobile & Desktop */}
-        <div className="bg-white rounded-lg p-4 shadow-sm md:shadow-md">
-          <h3 className="text-lg font-medium mb-4">{t('services')}</h3>
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
-                <Truck className="w-6 h-6 text-blue-500" />
-              </div>
-              <span className="text-sm">{t('track_shipment')}</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
-                <Package className="w-6 h-6 text-green-500" />
-              </div>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-2">
-                <Users className="w-6 h-6 text-purple-500" />
-              </div>
-              <span className="text-sm">{t('about')}</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-2">
-                <Headphones className="w-6 h-6 text-red-500" />
-              </div>
-              <span className="text-sm">{t('contact_us')}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function QueryContent({ t }: { t: (key: string) => string }) {
-  return (
     <div className="flex flex-col items-center justify-center h-full gap-8">
       {/* Banner */}
-      <div className="relative w-full h-40 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
-        <div className="absolute inset-0 p-6 text-white flex flex-col justify-center items-center text-center">
-          <h2 className="text-3xl font-bold mb-3 tracking-wide">澳德发物流</h2>
-          <h3 className="text-xl font-semibold mb-2">您的澳洲专线物流专家</h3>
-          <p className="text-sm max-w-2xl">
-            专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。
-            我们致力于为客户提供安全、高效、便捷的跨境物流解决方案。
-          </p>
+      <div className="relative w-full h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 rounded-xl overflow-hidden shadow-lg">
+        <div className="absolute inset-0 bg-pattern opacity-10"></div>
+        <div className="absolute inset-0 p-8 text-white">
+          <div className="h-full flex flex-col justify-center items-center text-center relative z-10">
+            <h3 className="text-xl font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+              澳德发物流，您的澳洲专线物流专家
+            </h3>
+            <p className="text-base max-w-2xl leading-relaxed text-blue-50 font-medium">
+              我们专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。
+              <br />
+              我们致力于为客户提供<span className="text-yellow-300">安全</span>
+              、<span className="text-yellow-300">高效</span>、
+              <span className="text-yellow-300">便捷</span>的跨境物流解决方案。
+            </p>
+          </div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/10 to-transparent"></div>
       </div>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden w-full pb-8">
@@ -438,11 +269,37 @@ function QueryContent({ t }: { t: (key: string) => string }) {
       </div>
 
       {/* Banner */}
-      <div className="relative w-full h-20 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
-        <div className="absolute inset-0 p-6 text-white flex flex-col justify-center items-center text-center">
-          <p className="text-xl font-bold mb-3 tracking-wide">
-            寄件｜查询｜预约
-          </p>
+      <div className="relative w-full h-24 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
+        <div className="absolute inset-0 grid grid-cols-3 gap-1">
+          <button
+            onClick={() => setActiveTab('send')}
+            className="flex items-center justify-center hover:bg-black/10 transition-colors"
+          >
+            <div className="text-white text-center">
+              <Package className="w-6 h-6 mx-auto mb-1" />
+              <span className="text-lg font-medium">寄件</span>
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('query')}
+            className="flex items-center justify-center hover:bg-black/10 transition-colors"
+          >
+            <div className="text-white text-center">
+              <Search className="w-6 h-6 mx-auto mb-1" />
+              <span className="text-lg font-medium">查询</span>
+            </div>
+          </button>
+          <a
+            href="https://adf.eagur.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center hover:bg-black/10 transition-colors"
+          >
+            <div className="text-white text-center">
+              <MapPin className="w-6 h-6 mx-auto mb-1" />
+              <span className="text-lg font-medium">预约</span>
+            </div>
+          </a>
         </div>
       </div>
 
@@ -456,6 +313,33 @@ function QueryContent({ t }: { t: (key: string) => string }) {
         >
           访问我们的网站：https://adf.eagur.com
         </a>
+      </div>
+    </div>
+  );
+}
+
+function QueryContent({ t }: { t: (key: string) => string }) {
+  return (
+    <div className="flex flex-col items-center justify-center h-full gap-8">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full pb-8">
+        <div className="bg-blue-600 p-6 text-white text-center">
+          <h2 className="text-2xl font-bold mb-2">
+            {t('track_your_shipment')}
+          </h2>
+          <p className="text-blue-100">
+            {t('enter_tracking_number_description')}
+          </p>
+        </div>
+        <div className="p-6">
+          <SearchForm />
+        </div>
+        {/* QR Code Scanner Section */}
+        <div className="flex flex-col items-center px-6">
+          <button className="bg-green-600 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition-colors w-full max-w-md">
+            <Search className="w-4 h-4" />
+            {t('scan_qr_code')}
+          </button>
+        </div>
       </div>
     </div>
   );
