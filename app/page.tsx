@@ -143,15 +143,6 @@ export default function HomePage() {
                   className="flex items-center justify-center hover:bg-black/10 transition-colors"
                 >
                   <div className="text-white text-center">
-                    <Search className="w-6 h-6 mx-auto mb-1" />
-                    <span className="text-lg font-medium">查询</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setActiveTab('query')}
-                  className="flex items-center justify-center hover:bg-black/10 transition-colors"
-                >
-                  <div className="text-white text-center">
                     <MapPin className="w-6 h-6 mx-auto mb-1" />
                     <span className="text-lg font-medium">预约</span>
                   </div>
@@ -161,16 +152,16 @@ export default function HomePage() {
           </div>
         )}
         {activeTab === 'home' && (
-          <div className="relative w-full h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 rounded-xl overflow-hidden shadow-lg mt-8">
+          <div className="relative w-full h-64 md:h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 rounded-xl overflow-hidden shadow-lg mt-8">
             <div className="absolute inset-0 bg-pattern opacity-10"></div>
-            <div className="absolute inset-0 p-8 text-white">
+            <div className="absolute inset-0 p-4 md:p-8 text-white">
               <div className="h-full flex flex-col justify-center items-center text-center relative z-10">
-                <h3 className="text-xl font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+                <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
                   澳德发物流，您的澳洲专线物流专家
                 </h3>
-                <p className="text-base max-w-2xl leading-relaxed text-blue-50 font-medium">
+                <p className="text-sm md:text-base max-w-2xl leading-relaxed text-blue-50 font-medium px-2">
                   我们专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。
-                  <br />
+                  <br className="hidden md:block" />
                   我们致力于为客户提供
                   <span className="text-yellow-300">安全</span>、
                   <span className="text-yellow-300">高效</span>、
