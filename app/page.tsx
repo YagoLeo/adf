@@ -99,92 +99,89 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="flex-1 container mx-auto px-4 py-6 overflow-y-auto">
         {activeTab === 'home' && (
-          <div className="flex flex-col items-center justify-center h-full gap-8">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden w-full pb-8">
-              <div className="bg-blue-600 p-6 text-white text-center">
-                <h2 className="text-2xl font-bold mb-2">
-                  {t('track_your_shipment')}
-                </h2>
-                <p className="text-blue-100">
-                  {t('enter_tracking_number_description')}
+          <div className="flex flex-col gap-6">
+            {/* Hero Section */}
+            <div className="relative w-full h-40 md:h-48 bg-blue-600 rounded-xl overflow-hidden">
+              <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-8">
+                <h1 className="text-xl md:text-2xl font-bold text-white mb-2">
+                  澳德发物流
+                </h1>
+                <p className="text-sm md:text-base text-blue-100 max-w-lg">
+                  专业提供中国至澳大利亚的国际物流服务
                 </p>
               </div>
-              <div className="p-6">
-                <SearchForm />
+              <div className="absolute bottom-0 right-0 w-32 h-32 md:w-40 md:h-40 opacity-10">
+                <Truck className="w-full h-full text-white" />
               </div>
-              {/* QR Code Scanner Section */}
-              <div className="flex flex-col items-center px-6">
-                <button className="bg-green-600 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition-colors w-full max-w-md">
-                  <Search className="w-4 h-4" />
-                  {t('scan_qr_code')}
-                </button>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={() => setActiveTab('send')}
+                className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              >
+                <Package className="w-8 h-8 text-blue-600 mb-2" />
+                <span className="text-gray-900 font-medium">快速寄件</span>
+                <span className="text-xs text-gray-500 mt-1">轻松发货</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('query')}
+                className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              >
+                <Search className="w-8 h-8 text-blue-600 mb-2" />
+                <span className="text-gray-900 font-medium">运单查询</span>
+                <span className="text-xs text-gray-500 mt-1">实时跟踪</span>
+              </button>
+            </div>
+
+            {/* Track Shipment */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <div className="mb-4">
+                <h2 className="text-lg font-medium text-gray-900 mb-1">
+                  查询运单
+                </h2>
+                <p className="text-sm text-gray-500">
+                  输入运单号码即可查询包裹状态
+                </p>
               </div>
+              <SearchForm />
+            </div>
+
+            {/* Service Features */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { icon: MapPin, label: '全程跟踪', color: 'text-green-600' },
+                { icon: Users, label: '专业团队', color: 'text-blue-600' },
+                { icon: Truck, label: '准时送达', color: 'text-purple-600' },
+                { icon: Headphones, label: '在线客服', color: 'text-red-600' },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center bg-white p-4 rounded-lg"
+                >
+                  <item.icon className={`w-6 h-6 ${item.color} mb-2`} />
+                  <span className="text-sm font-medium text-gray-700">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Contact Info */}
+            <div className="bg-white rounded-xl p-6 text-center">
+              <h3 className="font-medium text-gray-900 mb-2">联系我们</h3>
+              <p className="text-sm text-gray-600">
+                客服热线：400-123-4567
+                <br />
+                服务时间：周一至周六 9:00-18:00
+              </p>
             </div>
           </div>
         )}
         {activeTab === 'send' && <SendContent t={t} />}
         {activeTab === 'query' && <QueryContent t={t} />}
         {activeTab === 'profile' && <ProfileContent t={t} />}
-        {activeTab === 'home' && (
-          <div className="mt-4">
-            <div className="relative w-full h-24 bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg overflow-hidden">
-              <div className="absolute inset-0 grid grid-cols-3 gap-1">
-                <button
-                  onClick={() => setActiveTab('send')}
-                  className="flex items-center justify-center hover:bg-black/10 transition-colors"
-                >
-                  <div className="text-white text-center">
-                    <Package className="w-6 h-6 mx-auto mb-1" />
-                    <span className="text-lg font-medium">寄件</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setActiveTab('query')}
-                  className="flex items-center justify-center hover:bg-black/10 transition-colors"
-                >
-                  <div className="text-white text-center">
-                    <MapPin className="w-6 h-6 mx-auto mb-1" />
-                    <span className="text-lg font-medium">预约</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        {activeTab === 'home' && (
-          <div className="relative w-full h-64 md:h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 rounded-xl overflow-hidden shadow-lg mt-8">
-            <div className="absolute inset-0 bg-pattern opacity-10"></div>
-            <div className="absolute inset-0 p-4 md:p-8 text-white">
-              <div className="h-full flex flex-col justify-center items-center text-center relative z-10">
-                <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-                  澳德发物流，您的澳洲专线物流专家
-                </h3>
-                <p className="text-sm md:text-base max-w-2xl leading-relaxed text-blue-50 font-medium px-2">
-                  我们专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。
-                  <br className="hidden md:block" />
-                  我们致力于为客户提供
-                  <span className="text-yellow-300">安全</span>、
-                  <span className="text-yellow-300">高效</span>、
-                  <span className="text-yellow-300">便捷</span>
-                  的跨境物流解决方案。
-                </p>
-              </div>
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/10 to-transparent"></div>
-          </div>
-        )}
-        {activeTab === 'home' && (
-          <div className="w-full text-center p-4 bg-white rounded-lg shadow-sm mt-8">
-            <a
-              href="https://adf.eagur.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 font-medium"
-            >
-              访问我们的网站：https://adf.eagur.com
-            </a>
-          </div>
-        )}
       </main>
 
       {/* Bottom Navigation - Mobile Only */}
@@ -420,7 +417,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
   return (
     <div className="flex flex-col gap-4">
       {/* User Profile */}
-      <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm md:shadow-md">
+      {/* <div className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm md:shadow-md">
         <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
           <User className="w-8 h-8 text-gray-500" />
         </div>
@@ -430,10 +427,10 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
             {t('track_your_shipment')}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* My Services */}
-      <div className="bg-white rounded-lg p-4 shadow-sm md:shadow-md">
+      {/* <div className="bg-white rounded-lg p-4 shadow-sm md:shadow-md">
         <h3 className="text-lg font-medium mb-4">{t('services')}</h3>
         <div className="grid grid-cols-4 gap-4">
           <div className="flex flex-col items-center">
@@ -461,7 +458,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
             <span className="text-xs">{t('contact_us')}</span>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Customer Service FAQ */}
       <div className="bg-white rounded-lg p-4 shadow-sm md:shadow-md">
