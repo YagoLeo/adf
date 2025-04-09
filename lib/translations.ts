@@ -252,6 +252,8 @@ export const translations = {
     shipment_info_received: "已收到寄件信息",
     demo_tracking_number: "演示物流单号",
     company_description: "澳德发物流，从中国到澳洲的物流运输专线",
+    scan_barcode: '扫码查询',
+    scanning: '扫描中',
   },
 }
 
