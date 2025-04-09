@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SearchForm } from '@/components/search-form';
@@ -427,6 +427,19 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
 
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (loggedIn) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
+    setShowLoginForm(false);
+  }, []);
+
   // Quick actions with their content views
   const quickActions = [
     {
@@ -568,6 +581,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
           onSubmit={(e) => {
             e.preventDefault();
             if (loginForm.username && loginForm.password) {
+              localStorage.setItem('isLoggedIn', 'true');
               setIsLoggedIn(true);
             }
           }}
@@ -653,6 +667,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
       expandedFaq={expandedFaq}
       onSectionClick={setSelectedSection}
       onFaqClick={setExpandedFaq}
+      handleLogout={handleLogout}
     />
   );
 }
@@ -665,6 +680,7 @@ function MainContent({
   expandedFaq,
   onSectionClick,
   onFaqClick,
+  handleLogout,
 }: any) {
   const [activeOrderTab, setActiveOrderTab] = useState('all');
 
@@ -817,13 +833,20 @@ function MainContent({
             />
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-medium">{user.name}</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-medium">{user.name}</h3>
+              <button
+                onClick={handleLogout}
+                className="text-red-600 text-sm hover:text-red-700"
+              >
+                退出登录
+              </button>
+            </div>
             <div className="flex items-center space-x-2 mt-1">
               <span className="text-sm text-yellow-600">{user.level}</span>
               <span className="text-sm text-gray-500">积分: {user.points}</span>
             </div>
           </div>
-          {/* <button className="text-blue-600 text-sm">编辑资料</button> */}
         </div>
       </div>
 
