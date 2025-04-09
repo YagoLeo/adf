@@ -6,28 +6,73 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useLanguage } from "@/components/language-provider"
-import { Search } from 'lucide-react';
+import { Search, Scan } from 'lucide-react';
 
 export function SearchForm() {
-  const { t } = useLanguage()
-  const [trackingNumber, setTrackingNumber] = useState("")
-  const [error, setError] = useState("")
-  const router = useRouter()
+  const { t } = useLanguage();
+  const [trackingNumber, setTrackingNumber] = useState('');
+  const [error, setError] = useState('');
+  const [isScanning, setIsScanning] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!trackingNumber.trim()) {
-      setError(t("please_enter_tracking_number"))
-      return
+      setError(t('please_enter_tracking_number'));
+      return;
     }
 
     // Clear any previous errors
-    setError("")
+    setError('');
 
     // Navigate to the tracking result page
-    router.push(`/track/${encodeURIComponent(trackingNumber)}`)
-  }
+    router.push(`/track/${encodeURIComponent(trackingNumber)}`);
+  };
+
+  const handleScan = async () => {
+    try {
+      // 检查浏览器是否支持 BarcodeDetector
+      if (!('BarcodeDetector' in window)) {
+        setError(t('barcode_scanner_not_supported'));
+        return;
+      }
+
+      setIsScanning(true);
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+      });
+      const videoElement = document.createElement('video');
+      videoElement.srcObject = stream;
+      await videoElement.play();
+
+      const barcodeDetector = new (window as any).BarcodeDetector();
+      const detectBarcode = async () => {
+        try {
+          const barcodes = await barcodeDetector.detect(videoElement);
+          if (barcodes.length > 0) {
+            setTrackingNumber(barcodes[0].rawValue);
+            stream.getTracks().forEach((track) => track.stop());
+            setIsScanning(false);
+            router.push(`/track/${encodeURIComponent(barcodes[0].rawValue)}`);
+          } else {
+            requestAnimationFrame(detectBarcode);
+          }
+        } catch (error) {
+          console.error('Barcode detection error:', error);
+          setError(t('barcode_detection_error'));
+          stream.getTracks().forEach((track) => track.stop());
+          setIsScanning(false);
+        }
+      };
+
+      detectBarcode();
+    } catch (error) {
+      console.error('Camera access error:', error);
+      setError(t('camera_access_error'));
+      setIsScanning(false);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -53,6 +98,26 @@ export function SearchForm() {
       <Button type="submit" className="w-full">
         {t('track_shipment')}
       </Button>
+      <Button
+        type="button"
+        variant="outline"
+        className="w-full"
+        onClick={handleScan}
+        disabled={isScanning}
+      >
+        <Scan className="mr-2 h-4 w-4" />
+        {isScanning ? t('scanning') : t('scan_barcode')}
+      </Button>
+      {isScanning && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded-lg">
+            <p className="text-center">{t('scanning_message')}</p>
+            <Button onClick={() => setIsScanning(false)} className="mt-4">
+              {t('cancel')}
+            </Button>
+          </div>
+        </div>
+      )}
     </form>
   );
 }
