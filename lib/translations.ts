@@ -80,6 +80,63 @@ export type TranslationKey =
   | "select_currency"
   | "shipment_info_received"
   | "demo_tracking_number"
+  | "logistics_logo"
+  | "company_name"
+  | "direct_shipping_line"
+  | "shipping_time"
+  | "service_features"
+  | "gold_member"
+  | "pending_shipment"
+  | "unpaid"
+  | "my_address_book"
+  | "shipping_service"
+  | "online_service"
+  | "system_settings"
+  | "contact_service_description"
+  | "settings_description"
+  | "login_title"
+  | "login_description"
+  | "username"
+  | "password"
+  | "login"
+  | "back"
+  | "points"
+  | "logout"
+  | "faq_title"
+  | "faq_tracking_question"
+  | "faq_tracking_answer"
+  | "faq_delivery_time_question"
+  | "faq_delivery_time_answer"
+  | "faq_items_question"
+  | "faq_items_answer"
+  | "faq_shipping_cost_question"
+  | "faq_shipping_cost_answer"
+  | "faq_lost_package_question"
+  | "faq_lost_package_answer"
+  | "faq_pickup_time_question"
+  | "faq_pickup_time_answer"
+  | "from_location"
+  | "to_location"
+  | "view_details"
+  | "scan_qr_code"
+  | "scan_barcode"
+  | "company_slogan"
+  | "company_description"
+  | "company_commitment"
+  | "safe"
+  | "efficient"
+  | "convenient"
+  | "cross_border_logistics"
+  | "shipment_date"
+  | "carousel_global_network_title"
+  | "carousel_global_network_description"
+  | "carousel_safety_title"
+  | "carousel_safety_description"
+  | "carousel_customs_title"
+  | "carousel_customs_description"
+  | "quick_send_title"
+  | "quick_send_description"
+  | "track_order_description"
 
 export const translations = {
   en: {
@@ -165,11 +222,67 @@ export const translations = {
     select_currency: "Select currency",
     shipment_info_received: "Shipment information received",
     demo_tracking_number: "Demo tracking number",
+    logistics_logo: "Logistics Logo",
+    company_name: "ADF Logistics",
+    direct_shipping_line: "China - Australia Direct Line",
+    shipping_time: "Air: 7-10 days | Sea: 20-30 days",
+    service_features: "Professional Logistics · Safe & Fast · Full Tracking",
+    gold_member: "Gold Member",
+    pending_shipment: "Pending Shipment",
+    unpaid: "Unpaid",
+    my_address_book: "My Address Book",
+    shipping_service: "Shipping Service",
+    online_service: "Online Service",
+    system_settings: "System Settings",
+    contact_service_description: "If you have any questions, please contact our online customer service.",
+    settings_description: "System settings content to be improved.",
+    login_title: "Login Account",
+    login_description: "Login to enjoy more services",
+    username: "Username",
+    password: "Password",
+    login: "Login",
+    back: "Back",
+    points: "Points",
+    logout: "Logout",
+    faq_title: "FAQ",
+    faq_tracking_question: "How to track my package?",
+    faq_tracking_answer: "You can track your package through: 1. Enter tracking number on homepage 2. Scan QR code on package 3. View 'My Orders' in APP",
+    faq_delivery_time_question: "How long does shipping from China to Australia take?",
+    faq_delivery_time_answer: "Generally air freight takes 7-10 working days, sea freight takes 20-30 working days. Actual time may vary depending on destination, cargo type and customs clearance time.",
+    faq_items_question: "What items can you ship?",
+    faq_items_answer: "We can ship most daily items including clothing, electronics, food etc. But prohibited items like flammables, controlled knives etc. cannot be shipped. Please check the prohibited items list for details.",
+    faq_shipping_cost_question: "How is shipping cost calculated?",
+    faq_shipping_cost_answer: "Shipping cost is calculated based on weight or volume (whichever is greater), and destination. You can use our shipping calculator for accurate quotes.",
+    faq_lost_package_question: "What if package is lost or damaged?",
+    faq_lost_package_answer: "We provide basic insurance for all packages. If lost or damaged, please contact customer service immediately with tracking number and relevant evidence, we will compensate according to insurance terms.",
+    faq_pickup_time_question: "What are your pickup times?",
+    faq_pickup_time_answer: "Our pickup time is Monday to Saturday 9:00-18:00. You can choose your preferred pickup time slot when placing order.",
+    from_location: "From",
+    to_location: "To",
+    view_details: "View Details",
+    scan_qr_code: "Scan QR Code",
+    scan_barcode: "Scan Barcode",
+    company_slogan: "ADF Logistics, Your Australia Special Line Logistics Expert",
+    company_description: "We specialize in providing international logistics services from China to Australia, with a comprehensive logistics network and professional team.",
+    company_commitment: "We are committed to providing customers with",
+    safe: "safe",
+    efficient: "efficient",
+    convenient: "convenient",
+    cross_border_logistics: "cross-border logistics solutions",
+    shipment_date: "Shipment Date",
+    carousel_global_network_title: "Global Logistics Network",
+    carousel_global_network_description: "Covering major cities in Australia, providing professional and efficient logistics services",
+    carousel_safety_title: "Safe and Reliable",
+    carousel_safety_description: "Full monitoring to ensure your packages are safe and secure",
+    carousel_customs_title: "Fast Customs Clearance",
+    carousel_customs_description: "Professional customs clearance team to ensure smooth clearance of goods",
+    quick_send_title: "Quick Send",
+    quick_send_description: "Schedule Pickup",
+    track_order_description: "Real-time Tracking"
   },
   zh: {
     home: "首页",
     services: "服务",
-    scan_qr_code: "扫码查询",
     about: "关于我们",
     contact: "联系我们",
     track_shipment: "查询",
@@ -251,9 +364,63 @@ export const translations = {
     select_currency: "选择货币",
     shipment_info_received: "已收到寄件信息",
     demo_tracking_number: "演示物流单号",
-    company_description: "澳德发物流，从中国到澳洲的物流运输专线",
-    scan_barcode: '扫码查询',
-    scanning: '扫描中',
+    logistics_logo: "物流标志",
+    company_name: "澳德发物流",
+    direct_shipping_line: "中国 - 澳洲专线直达",
+    shipping_time: "空运 7-10天 | 海运 20-30天",
+    service_features: "专业物流服务 · 安全快捷 · 全程跟踪",
+    gold_member: "黄金会员",
+    pending_shipment: "待寄出",
+    unpaid: "待支付",
+    my_address_book: "我的地址簿",
+    shipping_service: "寄件服务",
+    online_service: "在线客服",
+    system_settings: "系统设置",
+    contact_service_description: "如果您有任何问题，请随时联系我们的在线客服。",
+    settings_description: "系统设置内容待完善。",
+    login_title: "登录账户",
+    login_description: "登录后享受更多服务",
+    username: "用户名",
+    password: "密码",
+    login: "登录",
+    back: "返回",
+    points: "积分",
+    logout: "退出登录",
+    faq_title: "常见问题",
+    faq_tracking_question: "如何追踪我的包裹？",
+    faq_tracking_answer: "您可以通过以下方式追踪包裹：1. 在首页输入运单号 2. 扫描包裹上的二维码 3. 在APP中查看'我的订单'",
+    faq_delivery_time_question: "从中国发货到澳洲需要多久？",
+    faq_delivery_time_answer: "一般空运7-10个工作日，海运20-30个工作日。具体时间可能因目的地、货物类型和清关时间而有所不同。",
+    faq_items_question: "你们可以寄送哪些物品？",
+    faq_items_answer: "我们可以运送大多数日常物品，包括服装、电子产品、食品等。但不能托运违禁品，如易燃物、管制刀具等。详细清单请查看违禁品列表。",
+    faq_shipping_cost_question: "如何计算运费？",
+    faq_shipping_cost_answer: "运费根据重量或体积（取较大值）计算，另外还要考虑目的地。您可以使用我们的运费计算器获取准确报价。",
+    faq_lost_package_question: "包裹丢失或损坏怎么办？",
+    faq_lost_package_answer: "我们为所有包裹提供基本保险。如发生丢失或损坏，请立即联系客服，提供运单号和相关证据，我们会按照保险条款进行赔付。",
+    faq_pickup_time_question: "你们的取件时间是怎样的？",
+    faq_pickup_time_answer: "我们的取件时间为周一至周六 9:00-18:00。您可以在下单时选择希望的取件时间段。",
+    from_location: "发货地",
+    to_location: "收货地",
+    view_details: "查看详情",
+    scan_qr_code: "扫描二维码",
+    scan_barcode: "扫描条码",
+    company_slogan: "澳德发物流，您的澳洲专线物流专家",
+    company_description: "我们专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。",
+    company_commitment: "我们致力于为客户提供",
+    safe: "安全",
+    efficient: "高效",
+    convenient: "便捷",
+    cross_border_logistics: "的跨境物流解决方案",
+    shipment_date: "发货日期",
+    carousel_global_network_title: "全球物流网络",
+    carousel_global_network_description: "覆盖澳洲各大城市，提供专业快捷的物流服务",
+    carousel_safety_title: "安全可靠",
+    carousel_safety_description: "全程监控，让您的包裹安全无忧",
+    carousel_customs_title: "快速通关",
+    carousel_customs_description: "专业报关团队，确保货物顺利清关",
+    quick_send_title: "快速寄件",
+    quick_send_description: "预约上门取件",
+    track_order_description: "实时跟踪物流进度"
   },
 }
 

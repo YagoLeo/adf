@@ -8,7 +8,7 @@ import { LanguageProvider } from "@/components/language-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: '澳德发物流',
+  title: 'ADF Logistics',
   description: 'Track your shipments and view detailed logistics information',
   icons: {
     icon: '/icon.jpg',

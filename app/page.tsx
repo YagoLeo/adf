@@ -21,6 +21,7 @@ import {
 import { ShipmentForm } from '@/components/shipment-form';
 import { HeroCarousel } from '@/components/hero-carousel';
 import '../styles/container.css';
+import type { TranslationFunction } from '@/types/language';
 
 // Add mock data after imports
 const mockOrders = [
@@ -94,12 +95,12 @@ export default function HomePage() {
           <div className="flex items-center">
             <Image
               src="/icon.jpg?height=40&width=40"
-              alt="Logistics Logo"
+              alt={t('logistics_logo')}
               width={40}
               height={40}
               className="mr-2"
             />
-            <h1 className="text-xl font-bold">澳德发物流</h1>
+            <h1 className="text-xl font-bold">{t('company_name')}</h1>
           </div>
           <div className="flex items-center gap-4">
             <nav className="hidden md:flex space-x-4">
@@ -180,9 +181,9 @@ export default function HomePage() {
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="mb-4">
                 <h2 className="text-lg font-medium text-gray-900 mb-1">
-                  物流查询
+                  {t('track_shipment')}
                 </h2>
-                <p className="text-sm text-gray-500">输入你的物流单号</p>
+                <p className="text-sm text-gray-500">{t('enter_tracking_number')}</p>
               </div>
               <SearchForm />
             </div>
@@ -194,17 +195,17 @@ export default function HomePage() {
                 className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
               >
                 <Package className="w-8 h-8 text-blue-600 mb-2" />
-                <span className="text-gray-900 font-medium">快速寄件</span>
-                <span className="text-xs text-gray-500 mt-1">预约上门取件</span>
+                <span className="text-gray-900 font-medium">{t('quick_send_title')}</span>
+                <span className="text-xs text-gray-500 mt-1">{t('quick_send_description')}</span>
               </button>
               <button
                 onClick={() => setActiveTab('query')}
                 className="flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow"
               >
                 <Search className="w-8 h-8 text-blue-600 mb-2" />
-                <span className="text-gray-900 font-medium">运单查询</span>
+                <span className="text-gray-900 font-medium">{t('track_your_shipment')}</span>
                 <span className="text-xs text-gray-500 mt-1">
-                  实时跟踪物流进度
+                  {t('track_order_description')}
                 </span>
               </button>
             </div>
@@ -213,15 +214,15 @@ export default function HomePage() {
             <div className="bg-white rounded-xl p-6">
               <div className="text-center md:border-l md:pl-4">
                 <p className="text-sm text-gray-600">
-                  中国 - 澳洲专线直达
+                  {t('direct_shipping_line')}
                   <br />
-                  空运 7-10天 | 海运 20-30天
+                  {t('shipping_time')}
                 </p>
               </div>
 
               <div className="mt-3 pt-3 border-t text-center">
                 <p className="text-xs text-blue-600">
-                  专业物流服务 · 安全快捷 · 全程跟踪
+                  {t('service_features')}
                 </p>
               </div>
             </div>
@@ -331,7 +332,7 @@ export default function HomePage() {
   );
 }
 
-function SendContent({ t }: { t: (key: string) => string }) {
+function SendContent({ t }: { t: TranslationFunction }) {
   return (
     <div className="flex flex-col gap-6">
       {/* Banner */}
@@ -352,7 +353,7 @@ function SendContent({ t }: { t: (key: string) => string }) {
   );
 }
 
-function HomeContent({ t }: { t: (key: string) => string }) {
+function HomeContent({ t }: { t: TranslationFunction }) {
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8">
       {/* Banner */}
@@ -361,14 +362,16 @@ function HomeContent({ t }: { t: (key: string) => string }) {
         <div className="absolute inset-0 p-8 text-white">
           <div className="h-full flex flex-col justify-center items-center text-center relative z-10">
             <h3 className="text-xl font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-              澳德发物流，您的澳洲专线物流专家
+              {t('company_slogan')}
             </h3>
             <p className="text-base max-w-2xl leading-relaxed text-blue-50 font-medium">
-              我们专业提供中国至澳大利亚的国际物流服务，拥有完善的物流网络和专业的团队。
+              {t('company_description')}
               <br />
-              我们致力于为客户提供<span className="text-yellow-300">安全</span>
-              、<span className="text-yellow-300">高效</span>、
-              <span className="text-yellow-300">便捷</span>的跨境物流解决方案。
+              {t('company_commitment')}
+              <span className="text-yellow-300">{t('safe')}</span>
+              、<span className="text-yellow-300">{t('efficient')}</span>、
+              <span className="text-yellow-300">{t('convenient')}</span>
+              {t('cross_border_logistics')}
             </p>
           </div>
         </div>
@@ -399,7 +402,7 @@ function HomeContent({ t }: { t: (key: string) => string }) {
   );
 }
 
-function QueryContent({ t }: { t: (key: string) => string }) {
+function QueryContent({ t }: { t: TranslationFunction }) {
   return (
     <div className="flex flex-col items-center justify-center h-full gap-8">
       <div className="bg-white rounded-lg shadow-md overflow-hidden w-full pb-8">
@@ -419,15 +422,76 @@ function QueryContent({ t }: { t: (key: string) => string }) {
   );
 }
 
-function ProfileContent({ t }: { t: (key: string) => string }) {
+function ProfileContent({ t }: { t: TranslationFunction }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const [activeView, setActiveView] = useState('main');
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [isClient, setIsClient] = useState(false);
 
+  // Move quickActions definition here
+  const quickActions = [
+    {
+      id: 'addresses',
+      icon: MapPin,
+      label: t('my_address_book'),
+      color: 'blue',
+      content: () => (
+        <div className="p-4">
+          {mockAddressBook.map((address) => (
+            <div
+              key={address.id}
+              className="bg-white rounded-lg border p-4 mb-4 shadow-sm"
+            >
+              <h3 className="text-lg font-medium">{address.name}</h3>
+              <p className="text-sm text-gray-500">{address.address}</p>
+              <p className="text-sm text-gray-500">{address.phone}</p>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: 'express',
+      icon: Truck,
+      label: t('shipping_service'),
+      color: 'green',
+      content: () => (
+        <div className="p-4">
+          <ShipmentForm />
+        </div>
+      ),
+    },
+    {
+      id: 'service',
+      icon: Headphones,
+      label: t('online_service'),
+      color: 'orange',
+      content: () => (
+        <div className="p-4">
+          <p className="text-sm text-gray-500">
+            {t('contact_service_description')}
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: 'settings',
+      icon: Grid,
+      label: t('system_settings'),
+      color: 'purple',
+      content: () => (
+        <div className="p-4">
+          <p className="text-sm text-gray-500">{t('settings_description')}</p>
+        </div>
+      ),
+    },
+  ];
+
+  // Add this to prevent hydration mismatch
   useEffect(() => {
+    setIsClient(true);
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
     if (loggedIn) {
       setIsLoggedIn(true);
@@ -440,100 +504,10 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
     setShowLoginForm(false);
   }, []);
 
-  // Quick actions with their content views
-  const quickActions = [
-    {
-      id: 'addresses',
-      icon: MapPin,
-      label: '我的地址簿',
-      color: 'blue',
-      content: () => (
-        <div className="space-y-4">
-          <h3 className="text-lg font-medium mb-4">我的地址簿</h3>
-          {mockAddressBook.map((address) => (
-            <div key={address.id} className="p-4 bg-white rounded-lg border">
-              <div className="flex justify-between">
-                <span className="font-medium">{address.name}</span>
-                <button className="text-blue-600 text-sm">编辑</button>
-              </div>
-              <p className="text-sm text-gray-600 mt-2">{address.address}</p>
-              <p className="text-sm text-gray-600">{address.phone}</p>
-            </div>
-          ))}
-          <button className="w-full p-3 border-2 border-dashed rounded-lg text-blue-600 hover:bg-blue-50">
-            + 添加新地址
-          </button>
-        </div>
-      ),
-    },
-    {
-      id: 'express',
-      icon: Truck,
-      label: '寄件服务',
-      color: 'green',
-      content: () => (
-        <div className="space-y-4">
-          <h3 className="text-lg font-medium mb-4">寄件服务</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <button className="p-4 bg-white rounded-lg border hover:border-green-500 hover:shadow-md">
-              <Package className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <span className="block text-sm">上门取件</span>
-            </button>
-            <button className="p-4 bg-white rounded-lg border hover:border-green-500 hover:shadow-md">
-              <MapPin className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <span className="block text-sm">网点自寄</span>
-            </button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 'service',
-      icon: Headphones,
-      label: '在线客服',
-      color: 'orange',
-      content: () => (
-        <div className="space-y-4">
-          <h3 className="text-lg font-medium mb-4">在线客服</h3>
-          <div className="p-4 bg-white rounded-lg border">
-            <div className="text-center mb-4">
-              <Headphones className="w-12 h-12 text-orange-500 mx-auto mb-2" />
-              <p className="text-sm text-gray-600">工作时间: 09:00 - 18:00</p>
-            </div>
-            <button className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">
-              在线咨询
-            </button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 'settings',
-      icon: Grid,
-      label: '系统设置',
-      color: 'purple',
-      content: () => (
-        <div className="space-y-4">
-          <h3 className="text-lg font-medium mb-4">系统设置</h3>
-          <div className="bg-white rounded-lg border p-4 space-y-4">
-            <div className="flex items-center justify-between py-2 border-b">
-              <span>消息推送</span>
-              <button className="w-12 h-6 bg-purple-500 rounded-full relative">
-                <span className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full" />
-              </button>
-            </div>
-            <div className="flex items-center justify-between py-2 border-b">
-              <span>语言设置</span>
-              <select className="border rounded px-2 py-1">
-                <option>简体中文</option>
-                <option>English</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-  ];
+  // Don't render anything until we're on the client
+  if (!isClient) {
+    return <div className="min-h-[400px] bg-gray-50"></div>;
+  }
 
   // Show blurred content with login prompt
   if (!isLoggedIn && !showLoginForm) {
@@ -555,11 +529,15 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
         {/* Blurred Background Content */}
         <div className="filter blur-sm">
           <MainContent
-            activeView={activeView}
+            activeView={null}
             selectedSection={selectedSection}
             quickActions={quickActions}
             expandedFaq={expandedFaq}
             onBackClick={() => setSelectedSection(null)}
+            onSectionClick={setSelectedSection}
+            onFaqClick={setExpandedFaq}
+            handleLogout={handleLogout}
+            t={t}
           />
         </div>
       </div>
@@ -574,8 +552,8 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
           <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <User className="w-10 h-10 text-blue-600" />
           </div>
-          <h2 className="text-xl font-medium">登录账户</h2>
-          <p className="text-sm text-gray-500 mt-1">登录后享受更多服务</p>
+          <h2 className="text-xl font-medium">{t('login_title')}</h2>
+          <p className="text-sm text-gray-500 mt-1">{t('login_description')}</p>
         </div>
         <form
           onSubmit={(e) => {
@@ -589,7 +567,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
         >
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              用户名
+              {t('username')}
             </label>
             <input
               type="text"
@@ -603,7 +581,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              密码
+              {t('password')}
             </label>
             <input
               type="password"
@@ -620,7 +598,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
               type="submit"
               className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
             >
-              登录
+              {t('login')}
             </button>
           </div>
           <button
@@ -628,7 +606,7 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
             onClick={() => setShowLoginForm(false)}
             className="w-full py-2 text-gray-600 hover:text-gray-800"
           >
-            返回
+            {t('back')}
           </button>
         </form>
       </div>
@@ -661,13 +639,15 @@ function ProfileContent({ t }: { t: (key: string) => string }) {
   // Main content (logged in view)
   return (
     <MainContent
-      activeView={activeView}
+      activeView={null}
       selectedSection={selectedSection}
       quickActions={quickActions}
       expandedFaq={expandedFaq}
+      onBackClick={() => setSelectedSection(null)}
       onSectionClick={setSelectedSection}
       onFaqClick={setExpandedFaq}
       handleLogout={handleLogout}
+      t={t}
     />
   );
 }
@@ -681,23 +661,35 @@ function MainContent({
   onSectionClick,
   onFaqClick,
   handleLogout,
-}: any) {
+  t,
+  onBackClick,
+}: {
+  activeView: string | null;
+  selectedSection: string | null;
+  quickActions: any[];
+  expandedFaq: number | null;
+  onSectionClick: (section: string | null) => void;
+  onFaqClick: (index: number | null) => void;
+  handleLogout: () => void;
+  t: TranslationFunction;
+  onBackClick: () => void;
+}) {
   const [activeOrderTab, setActiveOrderTab] = useState('all');
 
   // Mock user data
   const user = {
     name: '言',
     avatar: '/avatar.png',
-    level: '黄金会员',
-    points: 2580,
+    level: t('gold_member'),
+    points: 0,
   };
 
   // Mock order statistics
   const orderStats = [
-    { id: 'pending', label: '待寄出', count: 2 },
-    { id: 'unpaid', label: '待支付', count: 1 },
-    { id: 'shipping', label: '运送中', count: 3 },
-    { id: 'delivered', label: '已送达', count: 12 },
+    { id: 'pending', label: t('pending_shipment'), count: 0 },
+    { id: 'unpaid', label: t('unpaid'), count: 0 },
+    { id: 'shipping', label: t('in_transit'), count: 0 },
+    { id: 'delivered', label: t('delivered'), count: 0 },
   ];
 
   // Filter orders based on active tab
@@ -752,18 +744,18 @@ function MainContent({
             >
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <span className="text-sm text-gray-500">运单号</span>
+                  <span className="text-sm text-gray-500">{t('tracking_number')}</span>
                   <div className="font-medium">{order.trackingNumber}</div>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm text-gray-500">发货时间</span>
+                  <span className="text-sm text-gray-500">{t('shipment_date')}</span>
                   <div className="font-medium">{order.date}</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 py-3 border-t border-b">
                 <div className="flex-1">
-                  <div className="text-sm text-gray-500 mb-1">发货地</div>
+                  <div className="text-sm text-gray-500 mb-1">{t('from_location')}</div>
                   <div className="font-medium">{order.from}</div>
                 </div>
                 <svg
@@ -780,14 +772,14 @@ function MainContent({
                   />
                 </svg>
                 <div className="flex-1">
-                  <div className="text-sm text-gray-500 mb-1">收货地</div>
+                  <div className="text-sm text-gray-500 mb-1">{t('to_location')}</div>
                   <div className="font-medium">{order.to}</div>
                 </div>
               </div>
 
               {order.timeline && (
                 <div className="mt-3 pt-3">
-                  <div className="text-sm text-gray-500 mb-2">物流追踪</div>
+                  <div className="text-sm text-gray-500 mb-2">{t('tracking_history')}</div>
                   <div className="space-y-3">
                     {order.timeline.slice(0, 1).map((event, index) => (
                       <div key={index} className="flex items-start gap-3">
@@ -808,7 +800,7 @@ function MainContent({
 
               <div className="mt-4 flex justify-end">
                 <button className="text-blue-600 text-sm hover:text-blue-700">
-                  查看详情 →
+                  {t('view_details')} →
                 </button>
               </div>
             </div>
@@ -839,12 +831,12 @@ function MainContent({
                 onClick={handleLogout}
                 className="text-red-600 text-sm hover:text-red-700"
               >
-                退出登录
+                {t('logout')}
               </button>
             </div>
             <div className="flex items-center space-x-2 mt-1">
               <span className="text-sm text-yellow-600">{user.level}</span>
-              <span className="text-sm text-gray-500">积分: {user.points}</span>
+              <span className="text-sm text-gray-500">{t('points')}: {user.points}</span>
             </div>
           </div>
         </div>
@@ -879,67 +871,10 @@ function MainContent({
             >
               <action.icon className={`w-6 h-6 text-${action.color}-500`} />
             </div>
-            <span className="text-xs">{action.label}</span>
+            <span className="text-sm">{action.label}</span>
           </button>
         ))}
-      </div>
-
-      {/* FAQ Section */}
-      <div className="bg-white rounded-lg p-4 shadow-sm">
-        <h3 className="text-lg font-medium mb-4">常见问题</h3>
-        <div className="space-y-2">
-          {[
-            {
-              question: '如何追踪我的包裹？',
-              answer:
-                "您可以通过以下方式追踪包裹：1. 在首页输入运单号 2. 扫描包裹上的二维码 3. 在APP中查看'我的订单'",
-            },
-            {
-              question: '从中国发货到澳洲需要多久？',
-              answer:
-                '一般空运7-10个工作日，海运20-30个工作日。具体时间可能因目的地、货物类型和清关时间而有所不同。',
-            },
-            {
-              question: '你们可以寄送哪些物品？',
-              answer:
-                '我们可以运送大多数日常物品，包括服装、电子产品、食品等。但不能托运违禁品，如易燃物、管制刀具等。详细清单请查看违禁品列表。',
-            },
-            {
-              question: '如何计算运费？',
-              answer:
-                '运费根据重量或体积（取较大值）计算，另外还要考虑目的地。您可以使用我们的运费计算器获取准确报价。',
-            },
-            {
-              question: '包裹丢失或损坏怎么办？',
-              answer:
-                '我们为所有包裹提供基本保险。如发生丢失或损坏，请立即联系客服，提供运单号和相关证据，我们会按照保险条款进行赔付。',
-            },
-            {
-              question: '你们的取件时间是怎样的？',
-              answer:
-                '我们的取件时间为周一至周六 9:00-18:00。您可以在下单时选择希望的取件时间段。',
-            },
-          ].map((faq, index) => (
-            <div key={index} className="border rounded-lg overflow-hidden">
-              <button
-                className="w-full px-4 py-3 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
-                onClick={() => onFaqClick(expandedFaq === index ? null : index)}
-              >
-                <span className="font-medium">{faq.question}</span>
-                <span className="transform transition-transform duration-200">
-                  {expandedFaq === index ? '−' : '+'}
-                </span>
-              </button>
-              {expandedFaq === index && (
-                <div className="px-4 py-3 bg-white text-gray-600">
-                  {faq.answer}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
 }
-

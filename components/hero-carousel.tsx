@@ -2,26 +2,30 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-
-const slides = [
-  {
-    image: '/log1.jpg',
-    title: '全球物流网络',
-    description: '覆盖澳洲各大城市，提供专业快捷的物流服务'
-  },
-  {
-    image: '/log2.jpg',
-    title: '安全可靠',
-    description: '全程监控，让您的包裹安全无忧'
-  },
-  {
-    image: '/log3.jpg',
-    title: '快速通关',
-    description: '专业报关团队，确保货物顺利清关'
-  }
-]
+import { useLanguage } from '@/components/language-provider'
+import type { TranslationFunction } from '@/types/language'
 
 export function HeroCarousel() {
+  const { t } = useLanguage()
+  
+  const slides = [
+    {
+      image: '/log1.jpg',
+      title: t('carousel_global_network_title'),
+      description: t('carousel_global_network_description')
+    },
+    {
+      image: '/log2.jpg',
+      title: t('carousel_safety_title'),
+      description: t('carousel_safety_description')
+    },
+    {
+      image: '/log3.jpg',
+      title: t('carousel_customs_title'),
+      description: t('carousel_customs_description')
+    }
+  ]
+
   const [current, setCurrent] = useState(0)
 
   useEffect(() => {
