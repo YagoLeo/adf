@@ -1,9 +1,8 @@
-import { db } from "@/lib/firebase"
-import { collection, doc, getDoc, getDocs, query, where, setDoc } from "firebase/firestore"
+import { supabase } from "@/lib/supabase"
 import type { ShipmentDetails } from "@/types/shipment"
 
-// Collection name in Firestore
-const SHIPMENTS_COLLECTION = "shipments"
+// Table name in Supabase
+const LOGISTICS_TABLE = "logistics_items"
 
 /**
  * Fetch a shipment by its tracking number (House Bill Number)
@@ -12,52 +11,53 @@ const SHIPMENTS_COLLECTION = "shipments"
  */
 export async function getShipmentByTrackingNumber(trackingNumber: string): Promise<ShipmentDetails | null> {
   try {
-    // Create a reference to the specific document using the tracking number as the document ID
-    const shipmentRef = doc(db, SHIPMENTS_COLLECTION, trackingNumber)
-    const shipmentDoc = await getDoc(shipmentRef)
+    // First try to find by houseBillNumber
+    const { data: shipment, error } = await supabase
+      .from(LOGISTICS_TABLE)
+      .select('*')
+      .eq('house_bill_number', trackingNumber)
+      .single()
 
-    if (shipmentDoc.exists()) {
-      // Convert Firestore timestamp to Date if needed
-      const data = shipmentDoc.data() as ShipmentDetails
-
-      // If createdAt and updatedAt are Firestore timestamps, convert them to Date objects
-      if (data.createdAt && "toDate" in data.createdAt) {
-        data.createdAt = data.createdAt.toDate()
-      }
-
-      if (data.updatedAt && "toDate" in data.updatedAt) {
-        data.updatedAt = data.updatedAt.toDate()
-      }
-
-      return data
+    if (error) {
+      console.error("Error fetching shipment:", error)
+      return null
     }
 
-    // If the document doesn't exist with the tracking number as ID,
-    // try querying where houseBillNumber field equals the tracking number
-    const q = query(collection(db, SHIPMENTS_COLLECTION), where("houseBillNumber", "==", trackingNumber))
-
-    const querySnapshot = await getDocs(q)
-
-    if (!querySnapshot.empty) {
-      const doc = querySnapshot.docs[0]
-      const data = doc.data() as ShipmentDetails
-
-      // Convert timestamps if needed
-      if (data.createdAt && "toDate" in data.createdAt) {
-        data.createdAt = data.createdAt.toDate()
-      }
-
-      if (data.updatedAt && "toDate" in data.updatedAt) {
-        data.updatedAt = data.updatedAt.toDate()
-      }
-
-      return data
+    if (shipment) {
+      // 转换数据格式以匹配 ShipmentDetails 类型
+      return {
+        houseBillNumber: shipment.house_bill_number,
+        shipperName: shipment.shipper_name,
+        shipperAddress1: shipment.shipper_address1,
+        shipperCity: shipment.shipper_city,
+        shipperState: shipment.shipper_state,
+        shipperCountryCode: shipment.shipper_country_code,
+        shipperPostcode: shipment.shipper_postcode,
+        consigneeName: shipment.consignee_name,
+        consigneeAddress1: shipment.consignee_address1,
+        consigneeCity: shipment.consignee_city,
+        consigneePostcode: shipment.consignee_postcode,
+        consigneeState: shipment.consignee_state,
+        consigneeCountryCode: shipment.consignee_country_code,
+        consigneePhone: shipment.consignee_phone,
+        goodsDescription: shipment.goods_description,
+        weightInKG: shipment.weight_in_kg,
+        pieces: shipment.pieces,
+        packType: shipment.pack_type,
+        goodsValue: shipment.goods_value,
+        currency: shipment.currency,
+        cbm: shipment.cbm,
+        sacYN: shipment.sac_yn,
+        containerNumber: shipment.container_number,
+        status: shipment.status,
+        trackingEvents: [] // 如果需要跟踪事件，可以另外查询
+      } as ShipmentDetails
     }
 
     return null
   } catch (error) {
     console.error("Error fetching shipment:", error)
-    // Return mock data for demo purposes when Firestore is not available
+    // Return mock data for demo purposes when Supabase is not available
     if (trackingNumber === "DEMO123") {
       return getMockShipmentData(trackingNumber)
     }
@@ -66,21 +66,49 @@ export async function getShipmentByTrackingNumber(trackingNumber: string): Promi
 }
 
 /**
- * Sample function to add a shipment to Firestore (for admin use)
+ * Sample function to add a shipment to Supabase (for admin use)
  * @param shipment The shipment details to add
  * @returns The ID of the created document
  */
 export async function addShipment(shipment: ShipmentDetails): Promise<string> {
   try {
-    // In a real application, you would add validation here
-    const shipmentRef = doc(db, SHIPMENTS_COLLECTION, shipment.houseBillNumber)
-    await setDoc(shipmentRef, {
-      ...shipment,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    })
+    const { data, error } = await supabase
+      .from(LOGISTICS_TABLE)
+      .insert([{
+        house_bill_number: shipment.houseBillNumber,
+        shipper_name: shipment.shipperName,
+        shipper_address1: shipment.shipperAddress1,
+        shipper_city: shipment.shipperCity,
+        shipper_state: shipment.shipperState,
+        shipper_country_code: shipment.shipperCountryCode,
+        shipper_postcode: shipment.shipperPostcode,
+        consignee_name: shipment.consigneeName,
+        consignee_address1: shipment.consigneeAddress1,
+        consignee_city: shipment.consigneeCity,
+        consignee_postcode: shipment.consigneePostcode,
+        consignee_state: shipment.consigneeState,
+        consignee_country_code: shipment.consigneeCountryCode,
+        consignee_phone: shipment.consigneePhone,
+        goods_description: shipment.goodsDescription,
+        weight_in_kg: shipment.weightInKG,
+        pieces: shipment.pieces,
+        pack_type: shipment.packType,
+        goods_value: shipment.goodsValue,
+        currency: shipment.currency,
+        cbm: shipment.cbm,
+        sac_yn: shipment.sacYN,
+        container_number: shipment.containerNumber,
+        status: shipment.status || 'pending'
+      }])
+      .select()
+      .single()
 
-    return shipment.houseBillNumber
+    if (error) {
+      console.error("Error adding shipment:", error)
+      throw error
+    }
+
+    return data.house_bill_number
   } catch (error) {
     console.error("Error adding shipment:", error)
     // For demo purposes, just return the tracking number
@@ -88,7 +116,7 @@ export async function addShipment(shipment: ShipmentDetails): Promise<string> {
   }
 }
 
-// Mock data for demo purposes when Firestore is not available
+// Mock data for demo purposes when Supabase is not available
 function getMockShipmentData(trackingNumber: string): ShipmentDetails {
   return {
     houseBillNumber: trackingNumber,
@@ -114,23 +142,8 @@ function getMockShipmentData(trackingNumber: string): ShipmentDetails {
     cbm: 0.5,
     sacYN: "N",
     containerNumber: "CONT123456",
-    status: "In Transit",
-    trackingEvents: [
-      {
-        date: new Date().toISOString().split("T")[0],
-        time: "10:00",
-        location: "Origin Facility",
-        status: "Processed",
-        description: "Shipment information received",
-      },
-      {
-        date: new Date().toISOString().split("T")[0],
-        time: "14:30",
-        location: "Origin Facility",
-        status: "In Transit",
-        description: "Shipment has departed from origin facility",
-      },
-    ],
+    status: "in_transit",
+    trackingEvents: []
   }
 }
 

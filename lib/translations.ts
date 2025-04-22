@@ -137,6 +137,16 @@ export type TranslationKey =
   | "quick_send_title"
   | "quick_send_description"
   | "track_order_description"
+  | "invalid_credentials"
+  | "login_success"
+  | "username_taken"
+  | "register_success"
+  | "auth_error"
+  | "register_title"
+  | "loading"
+  | "register"
+  | "need_register"
+  | "need_login"
 
 export const translations = {
   en: {
@@ -278,7 +288,17 @@ export const translations = {
     carousel_customs_description: "Professional customs clearance team to ensure smooth clearance of goods",
     quick_send_title: "Quick Send",
     quick_send_description: "Schedule Pickup",
-    track_order_description: "Real-time Tracking"
+    track_order_description: "Real-time Tracking",
+    invalid_credentials: "Invalid username or password",
+    login_success: "Login successful",
+    username_taken: "Username already taken",
+    register_success: "Registration successful",
+    auth_error: "Authentication error",
+    register_title: "Register Account",
+    loading: "Loading...",
+    register: "Register",
+    need_register: "Need an account? Register",
+    need_login: "Already have an account? Login"
   },
   zh: {
     home: "首页",
@@ -420,7 +440,17 @@ export const translations = {
     carousel_customs_description: "专业报关团队，确保货物顺利清关",
     quick_send_title: "快速寄件",
     quick_send_description: "预约上门取件",
-    track_order_description: "实时跟踪物流进度"
+    track_order_description: "实时跟踪物流进度",
+    invalid_credentials: "用户名或密码错误",
+    login_success: "登录成功",
+    username_taken: "用户名已被使用",
+    register_success: "注册成功",
+    auth_error: "认证错误",
+    register_title: "注册账户",
+    loading: "加载中...",
+    register: "注册",
+    need_register: "需要账户？立即注册",
+    need_login: "已有账户？立即登录"
   },
 }
 

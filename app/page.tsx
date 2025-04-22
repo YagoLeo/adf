@@ -22,6 +22,7 @@ import { ShipmentForm } from '@/components/shipment-form';
 import { HeroCarousel } from '@/components/hero-carousel';
 import '../styles/container.css';
 import type { TranslationFunction } from '@/types/language';
+import { AuthForm } from '@/components/auth-form';
 
 // Add mock data after imports
 const mockOrders = [
@@ -427,7 +428,6 @@ function ProfileContent({ t }: { t: TranslationFunction }) {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [isClient, setIsClient] = useState(false);
 
   // Move quickActions definition here
@@ -500,6 +500,7 @@ function ProfileContent({ t }: { t: TranslationFunction }) {
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userId');
     setIsLoggedIn(false);
     setShowLoginForm(false);
   }, []);
@@ -544,71 +545,11 @@ function ProfileContent({ t }: { t: TranslationFunction }) {
     );
   }
 
-  // Show login form
+  // Show login/register form
   if (!isLoggedIn && showLoginForm) {
     return (
-      <div className="bg-white rounded-xl p-8 shadow-lg max-w-md mx-auto">
-        <div className="text-center mb-6">
-          <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <User className="w-10 h-10 text-blue-600" />
-          </div>
-          <h2 className="text-xl font-medium">{t('login_title')}</h2>
-          <p className="text-sm text-gray-500 mt-1">{t('login_description')}</p>
-        </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (loginForm.username && loginForm.password) {
-              localStorage.setItem('isLoggedIn', 'true');
-              setIsLoggedIn(true);
-            }
-          }}
-          className="space-y-4"
-        >
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t('username')}
-            </label>
-            <input
-              type="text"
-              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={loginForm.username}
-              onChange={(e) =>
-                setLoginForm((prev) => ({ ...prev, username: e.target.value }))
-              }
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t('password')}
-            </label>
-            <input
-              type="password"
-              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={loginForm.password}
-              onChange={(e) =>
-                setLoginForm((prev) => ({ ...prev, password: e.target.value }))
-              }
-              required
-            />
-          </div>
-          <div className="pt-4">
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              {t('login')}
-            </button>
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowLoginForm(false)}
-            className="w-full py-2 text-gray-600 hover:text-gray-800"
-          >
-            {t('back')}
-          </button>
-        </form>
+      <div className="max-w-md mx-auto">
+        <AuthForm />
       </div>
     );
   }
@@ -871,9 +812,59 @@ function MainContent({
             >
               <action.icon className={`w-6 h-6 text-${action.color}-500`} />
             </div>
-            <span className="text-sm">{action.label}</span>
+            <span className="text-xs">{action.label}</span>
           </button>
         ))}
+      </div>
+
+      {/* FAQ Section */}
+      <div className="bg-white rounded-lg p-4 shadow-sm">
+        <h3 className="text-lg font-medium mb-4">{t('faq_title')}</h3>
+        <div className="space-y-2">
+          {[
+            {
+              question: t('faq_tracking_question'),
+              answer: t('faq_tracking_answer'),
+            },
+            {
+              question: t('faq_delivery_time_question'),
+              answer: t('faq_delivery_time_answer'),
+            },
+            {
+              question: t('faq_items_question'),
+              answer: t('faq_items_answer'),
+            },
+            {
+              question: t('faq_shipping_cost_question'),
+              answer: t('faq_shipping_cost_answer'),
+            },
+            {
+              question: t('faq_lost_package_question'),
+              answer: t('faq_lost_package_answer'),
+            },
+            {
+              question: t('faq_pickup_time_question'),
+              answer: t('faq_pickup_time_answer'),
+            },
+          ].map((faq, index) => (
+            <div key={index} className="border rounded-lg overflow-hidden">
+              <button
+                className="w-full px-4 py-3 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+                onClick={() => onFaqClick(expandedFaq === index ? null : index)}
+              >
+                <span className="font-medium">{faq.question}</span>
+                <span className="transform transition-transform duration-200">
+                  {expandedFaq === index ? '−' : '+'}
+                </span>
+              </button>
+              {expandedFaq === index && (
+                <div className="px-4 py-3 bg-white text-gray-600">
+                  {faq.answer}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
